@@ -1,0 +1,16 @@
+{
+  "newsApp":"الاخبار",
+  "categoryInterest":"اختر فئة اهتمامك",
+  "sports":"الرياضة",
+  "politics":"السياسة",
+  "health":"الصحة",
+  "business":"الاعمال",
+  "science":"العلوم",
+  "environment":"البيئة",
+  "categories":"الفئات",
+  "settings":"الاعدادات",
+  "language":"اللغة",
+  "search":"ابحث",
+  "tryAgain":"حاول مجددا",
+  "wrong":"شيئا ما خطأ"
+}
