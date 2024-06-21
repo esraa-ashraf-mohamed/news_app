@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:news_app/api/api_manager.dart';
 import 'package:news_app/app_theme.dart';
 import 'package:news_app/articles/article_items.dart';
+import 'package:news_app/screens/settings/locale_provider.dart';
+import 'package:provider/provider.dart';
 
 class SearchArticles extends SearchDelegate {
   @override
@@ -26,9 +28,10 @@ class SearchArticles extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    var provider = Provider.of<LocaleProvider>(context);
     if (query.isNotEmpty) {
       return FutureBuilder(
-        future: ApiManager.searchArticles(query),
+        future: ApiManager.searchArticles(query, provider.currentLocale),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -36,15 +39,17 @@ class SearchArticles extends SearchDelegate {
                 color: AppTheme.primaryColor,
               ),
             );
-          } else if (snapshot.hasError) {
+          }
+          else if (snapshot.hasError) {
             return Center(
               child: Text(
                 'Something was wrong',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             );
-          } else if (snapshot.hasData) {
-            List articles = snapshot.data ?? [];
+          }
+          else if (snapshot.hasData) {
+            List articles = snapshot.data!;
             return Expanded(
                 child: NotificationListener(
               child: ListView.builder(
@@ -72,9 +77,10 @@ class SearchArticles extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    var provider = Provider.of<LocaleProvider>(context);
     if (query.isNotEmpty) {
       return FutureBuilder(
-        future: ApiManager.searchArticles(query),
+        future: ApiManager.searchArticles(query, provider.currentLocale),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -94,8 +100,9 @@ class SearchArticles extends SearchDelegate {
             return Expanded(
                 child: NotificationListener(
                   child: ListView.builder(
-                    itemBuilder: (context, index) =>
-                    ArticleItems(articles: articles[index]),
+                    itemBuilder: (context, index){
+                      return ArticleItems(articles: articles[index]);
+                    },
                     itemCount: articles.length,
               ),
             ));

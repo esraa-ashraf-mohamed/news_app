@@ -8,11 +8,12 @@ import 'package:news_app/models/sources_responses.dart';
 
 class ApiManager{
 
-  static Future<SourcesResponses?> getSources(String categoryId)async{
+  static Future<SourcesResponses?> getSources(String categoryId, String language)async{
     Uri url = Uri.https(ApiConstants.baseApi,ApiConstants.sourceApi,
         {
           'apiKey' : 'd7e63820d7c54ba98eb603a2dfa4e9b0',
-          'category' : categoryId
+          'category' : categoryId,
+          'language': language
         });
     try{
       var response = await http.get(url);
@@ -27,11 +28,12 @@ class ApiManager{
 
   // https://newsapi.org/v2/everything?q=bitcoin&apiKey=d7e63820d7c54ba98eb603a2dfa4e9b0
 
-  static Future<ArticleResponses?> getArticles(String sourceId)async{
+  static Future<ArticleResponses?> getArticles(String sourceId, String language)async{
     Uri url = Uri.https(ApiConstants.baseApi, ApiConstants.articleApi,
       {
         'apiKey' : 'd7e63820d7c54ba98eb603a2dfa4e9b0',
-        'sources' : sourceId
+        'language': language,
+        'sources' : sourceId,
       }
     );
     try{
@@ -45,10 +47,11 @@ class ApiManager{
     }
   }
 
-  static Future<List<Articles>> searchArticles(String query)async{
+  static Future<List<Articles>> searchArticles(String query, String language)async{
     Uri url = Uri.https(ApiConstants.baseApi, ApiConstants.articleApi,
         {
           'q' : query,
+          'language': language,
           'apiKey' : 'd7e63820d7c54ba98eb603a2dfa4e9b0'
         }
     );
